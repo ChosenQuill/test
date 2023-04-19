@@ -7,20 +7,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
 class TodoController {
     @Autowired
     private TodoRepository repository;
+    private final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     @PostMapping("/todo")
-    public void addTodo(@RequestParam String title,
+    public TodoModel addTodo(@RequestParam String title,
                         @RequestParam String dueDateString,
                         @RequestParam String description, @RequestParam int priority) {
-        Date dueDate = null;
+        Date dueDate;
         try {
-            dueDate = DateFormat.getDateInstance().parse(dueDateString);
+            dueDate = dateFormat.parse(dueDateString);
         } catch (ParseException e) {
             throw new IllegalArgumentException();
         }
@@ -31,6 +33,8 @@ class TodoController {
         model.setDescription(description);
 
         repository.save(model);
+
+        return model;
     }
 
     @GetMapping("/todo")

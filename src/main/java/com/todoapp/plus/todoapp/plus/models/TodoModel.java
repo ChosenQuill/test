@@ -1,9 +1,6 @@
 package com.todoapp.plus.todoapp.plus.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -29,7 +26,7 @@ public class TodoModel {
         return priority;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -49,7 +46,7 @@ public class TodoModel {
         this.priority = priority;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -60,5 +57,6 @@ public class TodoModel {
     private Date dueDate;
     private String description;
     private int priority;
-    private String category;
+    @OneToOne
+    private Category category;
 }

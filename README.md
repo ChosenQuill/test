@@ -13,13 +13,13 @@ on macOS/Linux and gradlew.bat bootRun on Windows).
 When started on a local machine, the API is available
 at http://127.0.0.1:8080/
 
-For the rest of this doc, assume <url> is http://127.0.0.1
+For the rest of this doc, assume {url} is http://127.0.0.1
 
 Documentation
 -------------
 
 The project provides documentation in the form of
-Swagger UI. The UI is hosted at <url>/api/documentation
+Swagger UI. The UI is hosted at {url}/api/documentation
 and can be viewed via a browser.
 
 Code style

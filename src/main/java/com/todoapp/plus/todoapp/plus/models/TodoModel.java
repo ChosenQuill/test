@@ -3,6 +3,8 @@ package com.todoapp.plus.todoapp.plus.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class TodoModel {
@@ -49,6 +51,10 @@ public class TodoModel {
     public void setCategory(Category category) {
         this.category = category;
     }
+    public void addReminder(Reminder reminder) {
+        if(reminders == null) reminders = new HashSet<>();
+        reminders.add(reminder);
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,4 +65,6 @@ public class TodoModel {
     private int priority;
     @OneToOne
     private Category category;
+    @OneToMany
+    private Set<Reminder> reminders;
 }

@@ -18,8 +18,9 @@ public class ReminderController {
     private final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     @PostMapping("/reminder")
+    @Deprecated(forRemoval = true)
     public Reminder createReminder(@RequestParam String name, @RequestParam String dateString) {
-        Date date = null;
+        Date date;
         try {
             date = dateFormat.parse(dateString);
         } catch (ParseException e) {

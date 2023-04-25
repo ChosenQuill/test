@@ -28,7 +28,7 @@ public class CategoryController {
     @GetMapping("/category/{id}")
     public Category getCategory(@PathVariable int id) {
         Category result = repository.getCategoryById(id);
-        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo not found");
+        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
         return result;
     }
 

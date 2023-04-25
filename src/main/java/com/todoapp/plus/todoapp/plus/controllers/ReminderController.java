@@ -46,7 +46,7 @@ public class ReminderController {
     @GetMapping("/reminder/{id}")
     public Reminder getReminder(@PathVariable Integer id) {
         Reminder result = repository.getReminderById(id);
-        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo not found");
+        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reminder not found");
         return result;
     }
 

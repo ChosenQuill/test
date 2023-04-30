@@ -35,25 +35,6 @@ public class TodoModel {
     }
     public Set<Reminder> getReminders() { return reminders; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
     public void addReminder(Reminder reminder) {
         if(reminders == null) reminders = new HashSet<>();
         reminders.add(reminder);
@@ -71,4 +52,24 @@ public class TodoModel {
     private Category category;
     @OneToMany
     private Set<Reminder> reminders;
+
+    public TodoModel() {}
+
+    public TodoModel(String title, Date dueDate, String description, int priority, Category category) {
+        this.title = title;
+        this.dueDate = dueDate;
+        this.description = description;
+        this.priority = priority;
+        this.category = category;
+    }
+
+    public TodoModel(String title, Date dueDate, String description, int priority, Category category,
+                     Set<Reminder> reminders) {
+        this.title = title;
+        this.dueDate = dueDate;
+        this.description = description;
+        this.priority = priority;
+        this.category = category;
+        this.reminders = reminders;
+    }
 }

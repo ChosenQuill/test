@@ -33,6 +33,9 @@ public class TodoModel {
     public Category getCategory() {
         return category;
     }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
     public Set<Reminder> getReminders() { return reminders; }
 
     public void addReminder(Reminder reminder) {

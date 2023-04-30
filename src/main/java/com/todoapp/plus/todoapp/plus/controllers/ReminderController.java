@@ -4,9 +4,7 @@ import com.todoapp.plus.todoapp.plus.models.Reminder;
 import com.todoapp.plus.todoapp.plus.models.TodoModel;
 import com.todoapp.plus.todoapp.plus.repository.ReminderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,9 +43,7 @@ public class ReminderController {
 
     @GetMapping("/reminder/{id}")
     public Reminder getReminder(@PathVariable Integer id) {
-        Reminder result = repository.getReminderById(id);
-        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reminder not found");
-        return result;
+        return repository.getReminderById(id);
     }
 
     @DeleteMapping("/reminder/{id}")

@@ -7,7 +7,9 @@ import com.todoapp.plus.todoapp.plus.repository.CategoryRepository;
 import com.todoapp.plus.todoapp.plus.repository.ReminderRepository;
 import com.todoapp.plus.todoapp.plus.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,22 +38,17 @@ class TodoController {
         } catch (ParseException e) {
             throw new IllegalArgumentException();
         }
-        TodoModel model = new TodoModel();
-        model.setTitle(title);
-        model.setDueDate(dueDate);
-        model.setPriority(priority);
-        model.setDescription(description);
+        Category taskCategory = null;
 
         if(category != null && !category.isEmpty()) {
-            Category taskCategory = categoryRepository.getCategoryByName(category);
+            taskCategory = categoryRepository.getCategoryByName(category);
             if(taskCategory == null) {
-                taskCategory = new Category();
-                taskCategory.setName(category);
+                taskCategory = new Category(category);
                 categoryRepository.save(taskCategory);
             }
-
-            model.setCategory(taskCategory);
         }
+
+        TodoModel model = new TodoModel(title, dueDate, description, priority, taskCategory);
 
         repository.save(model);
 
@@ -65,7 +62,9 @@ class TodoController {
 
     @GetMapping("/todo/{id}")
     public TodoModel getTodo(@PathVariable int id) {
-        return repository.getTodoById(id);
+        TodoModel result = repository.getTodoById(id);
+        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo not found");
+        return result;
     }
 
     @PostMapping("/todo/{id}/reminder")
@@ -85,9 +84,7 @@ class TodoController {
             }
         }
 
-        Reminder reminder = new Reminder();
-        reminder.setReminderDate(date);
-        reminder.setName(name);
+        Reminder reminder = new Reminder(date, name);
 
         reminderRepository.save(reminder);
 

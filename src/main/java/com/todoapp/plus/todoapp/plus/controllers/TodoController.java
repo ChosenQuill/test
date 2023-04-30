@@ -38,22 +38,17 @@ class TodoController {
         } catch (ParseException e) {
             throw new IllegalArgumentException();
         }
-        TodoModel model = new TodoModel();
-        model.setTitle(title);
-        model.setDueDate(dueDate);
-        model.setPriority(priority);
-        model.setDescription(description);
+        Category taskCategory = null;
 
         if(category != null && !category.isEmpty()) {
-            Category taskCategory = categoryRepository.getCategoryByName(category);
+            taskCategory = categoryRepository.getCategoryByName(category);
             if(taskCategory == null) {
-                taskCategory = new Category();
-                taskCategory.setName(category);
+                taskCategory = new Category(category);
                 categoryRepository.save(taskCategory);
             }
-
-            model.setCategory(taskCategory);
         }
+
+        TodoModel model = new TodoModel(title, dueDate, description, priority, taskCategory);
 
         repository.save(model);
 
@@ -89,9 +84,7 @@ class TodoController {
             }
         }
 
-        Reminder reminder = new Reminder();
-        reminder.setReminderDate(date);
-        reminder.setName(name);
+        Reminder reminder = new Reminder(date, name);
 
         reminderRepository.save(reminder);
 

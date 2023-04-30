@@ -34,6 +34,9 @@ class TodoController {
         if(category != null && categoryRepository.getCategoryByName(category.getName()) == null) {
             categoryRepository.save(category);
         }
+        if(category != null && categoryRepository.getCategoryByName(category.getName()) != null) {
+            todo.setCategory(categoryRepository.getCategoryByName(category.getName())); //JPA is unhappy that the reference doesn't match
+        }
         return repository.save(todo);
     }
 

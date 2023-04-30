@@ -17,24 +17,19 @@ public class Reminder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    public Reminder() {}
+
+    public Reminder(Date reminderDate, String name) {
+        this.reminderDate = reminderDate;
+        this.name = name;
+    }
+
     public Date getReminderDate() {
         return reminderDate;
     }
 
-    public void setReminderDate(Date reminderDate) {
-        this.reminderDate = reminderDate;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getId() {

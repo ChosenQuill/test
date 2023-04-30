@@ -29,9 +29,7 @@ public class ReminderController {
             throw new IllegalArgumentException();
         }
 
-        Reminder reminder = new Reminder();
-        reminder.setReminderDate(date);
-        reminder.setName(name);
+        Reminder reminder = new Reminder(date, name);
 
         repository.save(reminder);
 

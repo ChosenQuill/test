@@ -17,25 +17,11 @@ import java.util.Date;
 public class ReminderController {
     @Autowired
     private ReminderRepository repository;
-    private final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     @PostMapping("/reminder")
     @Deprecated(forRemoval = true)
-    public Reminder createReminder(@RequestParam String name, @RequestParam String dateString) {
-        Date date;
-        try {
-            date = dateFormat.parse(dateString);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException();
-        }
-
-        Reminder reminder = new Reminder();
-        reminder.setReminderDate(date);
-        reminder.setName(name);
-
-        repository.save(reminder);
-
-        return reminder;
+    public Reminder createReminder(@RequestBody Reminder reminder) {
+        return repository.save(reminder);
     }
 
     @GetMapping("/reminder")

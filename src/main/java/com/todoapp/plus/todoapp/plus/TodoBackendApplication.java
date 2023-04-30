@@ -39,21 +39,16 @@ public class TodoBackendApplication {
 	public CommandLineRunner demoData(TodoRepository todoRepository,
 									  CategoryRepository categoryRepository) {
 		return (args) -> {
-			Category tasks = new Category();
-			tasks.setName("tasks");
-			Category alarms = new Category();
-			alarms.setName("alarms");
+			Category tasks = new Category("tasks");
+			Category alarms = new Category("alarms");
 
 			categoryRepository.save(tasks);
 			categoryRepository.save(alarms);
 
-			TodoModel task1 = new TodoModel();
-			task1.setCategory(tasks);
-			task1.setTitle("Create Spring Project");
-			task1.setDescription("Create a starter project for us to build on.");
-			task1.setPriority(1);
-			task1.setDueDate(Date.from(Instant.now().plus(1, ChronoUnit.DAYS)));
-
+			TodoModel task1 = new TodoModel("Create Spring Project",
+					Date.from(Instant.now().plus(1, ChronoUnit.DAYS)),
+					"Create a starter project for us to build on.", 1,
+					tasks, null);
 			todoRepository.save(task1);
 		};
 	}

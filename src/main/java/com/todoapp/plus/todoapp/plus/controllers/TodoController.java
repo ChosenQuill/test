@@ -7,9 +7,7 @@ import com.todoapp.plus.todoapp.plus.repository.CategoryRepository;
 import com.todoapp.plus.todoapp.plus.repository.ReminderRepository;
 import com.todoapp.plus.todoapp.plus.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -67,9 +65,7 @@ class TodoController {
 
     @GetMapping("/todo/{id}")
     public TodoModel getTodo(@PathVariable int id) {
-        TodoModel result = repository.getTodoById(id);
-        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo not found");
-        return result;
+        return repository.getTodoById(id);
     }
 
     @PostMapping("/todo/{id}/reminder")

@@ -3,9 +3,7 @@ package com.todoapp.plus.todoapp.plus.controllers;
 import com.todoapp.plus.todoapp.plus.models.Category;
 import com.todoapp.plus.todoapp.plus.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class CategoryController {
@@ -27,9 +25,7 @@ public class CategoryController {
 
     @GetMapping("/category/{id}")
     public Category getCategory(@PathVariable int id) {
-        Category result = repository.getCategoryById(id);
-        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
-        return result;
+        return repository.getCategoryById(id);
     }
 
     @DeleteMapping("/category/{id}")

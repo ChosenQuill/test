@@ -20,6 +20,10 @@ public class Category {
         return name;
     }
 
+    public int getId() {
+        return id;
+    }
+
     private String name;
 
     @Id

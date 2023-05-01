@@ -54,6 +54,7 @@ public class TodoModel {
     @OneToOne
     private Category category;
     @OneToMany
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Set<Reminder> reminders;
 
     public TodoModel() {}

@@ -1,5 +1,7 @@
 package com.todoapp.plus.todoapp.plus.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -31,6 +33,10 @@ public class TodoModel {
     public Category getCategory() {
         return category;
     }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    public Set<Reminder> getReminders() { return reminders; }
 
     public void addReminder(Reminder reminder) {
         if(reminders == null) reminders = new HashSet<>();
@@ -38,6 +44,7 @@ public class TodoModel {
     }
 
     @Id
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String title;

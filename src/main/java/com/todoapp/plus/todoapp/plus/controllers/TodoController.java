@@ -28,31 +28,16 @@ class TodoController {
     private final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     @PostMapping("/todo")
-    public TodoModel addTodo(@RequestParam String title,
-                        @RequestParam String dueDateString,
-                        @RequestParam String category,
-                        @RequestParam String description, @RequestParam int priority) {
-        Date dueDate;
-        try {
-            dueDate = dateFormat.parse(dueDateString);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException();
+    public TodoModel addTodoWithBody(@RequestBody TodoModel todo) {
+        Category category = todo.getCategory();
+
+        if(category != null && categoryRepository.getCategoryByName(category.getName()) == null) {
+            categoryRepository.save(category);
         }
-        Category taskCategory = null;
-
-        if(category != null && !category.isEmpty()) {
-            taskCategory = categoryRepository.getCategoryByName(category);
-            if(taskCategory == null) {
-                taskCategory = new Category(category);
-                categoryRepository.save(taskCategory);
-            }
+        if(category != null && categoryRepository.getCategoryByName(category.getName()) != null) {
+            todo.setCategory(categoryRepository.getCategoryByName(category.getName())); //JPA is unhappy that the reference doesn't match
         }
-
-        TodoModel model = new TodoModel(title, dueDate, description, priority, taskCategory);
-
-        repository.save(model);
-
-        return model;
+        return repository.save(todo);
     }
 
     @GetMapping("/todo")
@@ -69,25 +54,13 @@ class TodoController {
 
     @PostMapping("/todo/{id}/reminder")
     public void addReminder(@PathVariable int id,
-                            @RequestParam String name,
-                            @RequestParam(required = false) String dateString) {
+                            @RequestBody Reminder reminder) {
         TodoModel model = repository.getTodoById(id);
-
-        Date date;
-        if(dateString == null) {
-            date = model.getDueDate();
-        } else {
-            try {
-                date = dateFormat.parse(dateString);
-            } catch (ParseException e) {
-                throw new IllegalArgumentException();
-            }
-        }
-
-        Reminder reminder = new Reminder(date, name);
 
         reminderRepository.save(reminder);
 
         model.addReminder(reminder);
+
+        repository.save(model);
     }
 }

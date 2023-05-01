@@ -36,6 +36,7 @@ public class ReminderController {
         return result;
     }
 
+    @Deprecated //Would require properly adjusting TodoRepository for this to work properly
     @DeleteMapping("/reminder/{id}")
     public int removeReminder(@PathVariable Integer id) {
         return repository.deleteReminderById(id);

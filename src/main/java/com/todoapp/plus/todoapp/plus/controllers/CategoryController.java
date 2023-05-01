@@ -13,9 +13,7 @@ public class CategoryController {
     private CategoryRepository repository;
 
     @PostMapping("/category")
-    public Category createCategory(String name) {
-        Category category = new Category(name);
-
+    public Category createCategory(@RequestBody Category category) {
         return repository.save(category);
     }
 
